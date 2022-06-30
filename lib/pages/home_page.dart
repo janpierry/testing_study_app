@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:testing_app/models/favorites.dart';
-import 'package:testing_app/screens/favorites.dart';
+
+import '../models/favorites.dart';
+import 'favorites_page.dart';
 
 class HomePage extends StatelessWidget {
   static String routeName = '/';
+
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Testing Sample'),
+        title: const Text('Testing Sample'),
         actions: <Widget>[
           TextButton.icon(
             style: TextButton.styleFrom(primary: Colors.white),
             onPressed: () {
               Navigator.pushNamed(context, FavoritesPage.routeName);
             },
-            icon: Icon(Icons.favorite_border),
-            label: Text('Favorites'),
+            icon: const Icon(Icons.favorite_border),
+            label: const Text('Favorites'),
           ),
         ],
       ),
@@ -26,7 +29,7 @@ class HomePage extends StatelessWidget {
         itemCount: 100,
         cacheExtent: 20.0,
         padding: const EdgeInsets.symmetric(vertical: 16),
-        itemBuilder: (context, index) => ItemTile(index),
+        itemBuilder: (context, index) => ItemTile(itemNo: index),
       ),
     );
   }
@@ -35,9 +38,10 @@ class HomePage extends StatelessWidget {
 class ItemTile extends StatelessWidget {
   final int itemNo;
 
-  const ItemTile(
-    this.itemNo,
-  );
+  const ItemTile({
+    Key? key,
+    required this.itemNo,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +60,8 @@ class ItemTile extends StatelessWidget {
         trailing: IconButton(
           key: Key('icon_$itemNo'),
           icon: favoritesList.items.contains(itemNo)
-              ? Icon(Icons.favorite)
-              : Icon(Icons.favorite_border),
+              ? const Icon(Icons.favorite)
+              : const Icon(Icons.favorite_border),
           onPressed: () {
             !favoritesList.items.contains(itemNo)
                 ? favoritesList.add(itemNo)
@@ -67,7 +71,7 @@ class ItemTile extends StatelessWidget {
                 content: Text(favoritesList.items.contains(itemNo)
                     ? 'Added to favorites.'
                     : 'Removed from favorites.'),
-                duration: Duration(seconds: 1),
+                duration: const Duration(seconds: 1),
               ),
             );
           },
